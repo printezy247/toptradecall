@@ -1,0 +1,71 @@
+// Top Trade Calls
+// Original work -- not derived from, and not a copy or modification of,
+// any third-party commercial TradingView script.
+// License: same as the containing repository (see LICENSE).
+
+//@version=6
+indicator(title="Top Trade Calls - 1W", shorttitle="TTC 1W", overlay=true, max_labels_count=50)
+
+// ---------- Inputs ----------
+tfInput      = input.timeframe("W", "Timeframe to Analyze")
+emaFastLen   = input.int(9,  "Fast EMA Length", minval=1)
+emaSlowLen   = input.int(21, "Slow EMA Length", minval=1)
+rsiLen       = input.int(14, "RSI Length", minval=1)
+volLen       = input.int(8,  "Volume Pressure Lookback", minval=1)
+buyThresh    = input.float(20,  "Buy Threshold", minval=0, maxval=100)
+sellThresh   = input.float(-20, "Sell Threshold", minval=-100, maxval=0)
+showLabel    = input.bool(true, "Show Bias Label")
+showBg       = input.bool(true, "Show Background Tint")
+labelSizeOpt = input.string("Normal", "Label Size", options=["Small", "Normal", "Large"])
+
+lSize = labelSizeOpt == "Large" ? size.large : labelSizeOpt == "Small" ? size.small : size.normal
+
+// ---------- Scoring engine ----------
+// score combines trend (EMA spread normalized by ATR), momentum (RSI distance
+// from 50) and volume pressure (directional volume over a lookback window)
+// into a single -100..100 confluence reading for 1W (1 week).
+f_score() =>
+    fastEma = ta.ema(close, emaFastLen)
+    slowEma = ta.ema(close, emaSlowLen)
+    atrVal  = ta.atr(14)
+    trendRaw   = atrVal == 0.0 ? 0.0 : (fastEma - slowEma) / atrVal * 20.0
+    trendScore = math.max(-100.0, math.min(100.0, trendRaw))
+
+    rsiVal        = ta.rsi(close, rsiLen)
+    momentumScore = (rsiVal - 50.0) * 2.0
+
+    priceChg = ta.change(ohlc4)
+    upVol    = priceChg > 0 ? volume : 0.0
+    downVol  = priceChg < 0 ? volume : 0.0
+    sumUp    = math.sum(upVol, volLen)
+    sumDown  = math.sum(downVol, volLen)
+    totalVol = sumUp + sumDown
+    volumeScore = totalVol == 0.0 ? 0.0 : (sumUp - sumDown) / totalVol * 100.0
+
+    score = trendScore * 0.4 + momentumScore * 0.3 + volumeScore * 0.3
+    [score, trendScore, momentumScore, volumeScore]
+
+[score, trendScore, momentumScore, volumeScore] = request.security(syminfo.tickerid, tfInput, f_score(), gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_off)
+
+bias = score >= buyThresh ? "BUY" : score <= sellThresh ? "SELL" : "NEUTRAL"
+biasTextColor = score >= buyThresh ? color.lime : score <= sellThresh ? color.red : color.gray
+bgCol = score >= buyThresh ? color.new(color.lime, 85) : score <= sellThresh ? color.new(color.red, 85) : na
+
+// ---------- Visuals ----------
+var label biasLabel = na
+if showLabel and barstate.islast
+    labelTxt = "Top Trade Calls (1W)\n" + bias + "  " + str.tostring(math.round(score)) +
+      "\nTrend " + str.tostring(math.round(trendScore)) +
+      " | Mom "  + str.tostring(math.round(momentumScore)) +
+      " | Vol "  + str.tostring(math.round(volumeScore))
+    if na(biasLabel)
+        biasLabel := label.new(bar_index, high, labelTxt, style=label.style_label_down, color=color.new(color.black, 20), textcolor=biasTextColor, size=lSize)
+    else
+        label.set_xy(biasLabel, bar_index, high)
+        label.set_text(biasLabel, labelTxt)
+        label.set_textcolor(biasLabel, biasTextColor)
+
+bgcolor(showBg ? bgCol : na)
+
+alertcondition(ta.crossover(score, buyThresh),   title="Top Trade Calls Buy (1W)",  message="Top Trade Calls: BUY bias on {{ticker}} (1W)")
+alertcondition(ta.crossunder(score, sellThresh), title="Top Trade Calls Sell (1W)", message="Top Trade Calls: SELL bias on {{ticker}} (1W)")
