@@ -1,0 +1,77 @@
+// Top Trade Calls
+// Original work -- not derived from, and not a copy or modification of,
+// any third-party commercial TradingView script.
+// License: same as the containing repository (see LICENSE).
+
+//@version=6
+indicator(title="Top Trade Calls - MTF Dashboard", shorttitle="TTC MTF", overlay=true, max_labels_count=50)
+
+// ---------- Inputs ----------
+emaFastLen  = input.int(9,  "Fast EMA Length", minval=1)
+emaSlowLen  = input.int(21, "Slow EMA Length", minval=1)
+rsiLen      = input.int(14, "RSI Length", minval=1)
+volLen      = input.int(8,  "Volume Pressure Lookback", minval=1)
+buyThresh   = input.float(20,  "Buy Threshold", minval=0, maxval=100)
+sellThresh  = input.float(-20, "Sell Threshold", minval=-100, maxval=0)
+highlightTf = input.timeframe("D", "Highlighted Resolution", options=["W", "D", "240", "120", "60", "30", "15", "5"])
+tablePosOpt = input.string("Top Right", "Table Position", options=["Top Right", "Top Left", "Bottom Right", "Bottom Left"])
+
+tablePos = tablePosOpt == "Top Right" ? position.top_right : tablePosOpt == "Top Left" ? position.top_left : tablePosOpt == "Bottom Right" ? position.bottom_right : position.bottom_left
+
+// ---------- Scoring engine ----------
+// Same -100..100 confluence score as the single-timeframe scripts: trend
+// (EMA spread normalized by ATR) + momentum (RSI distance from 50) + volume
+// pressure (directional volume over a lookback window).
+f_score() =>
+    fastEma = ta.ema(close, emaFastLen)
+    slowEma = ta.ema(close, emaSlowLen)
+    atrVal  = ta.atr(14)
+    trendRaw   = atrVal == 0.0 ? 0.0 : (fastEma - slowEma) / atrVal * 20.0
+    trendScore = math.max(-100.0, math.min(100.0, trendRaw))
+
+    rsiVal        = ta.rsi(close, rsiLen)
+    momentumScore = (rsiVal - 50.0) * 2.0
+
+    priceChg = ta.change(ohlc4)
+    upVol    = priceChg > 0 ? volume : 0.0
+    downVol  = priceChg < 0 ? volume : 0.0
+    sumUp    = math.sum(upVol, volLen)
+    sumDown  = math.sum(downVol, volLen)
+    totalVol = sumUp + sumDown
+    volumeScore = totalVol == 0.0 ? 0.0 : (sumUp - sumDown) / totalVol * 100.0
+
+    trendScore * 0.4 + momentumScore * 0.3 + volumeScore * 0.3
+
+s1w = request.security(syminfo.tickerid, "W",   f_score(), gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_off)
+s1d = request.security(syminfo.tickerid, "D",   f_score(), gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_off)
+s4h = request.security(syminfo.tickerid, "240", f_score(), gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_off)
+s1h = request.security(syminfo.tickerid, "60",  f_score(), gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_off)
+s30 = request.security(syminfo.tickerid, "30",  f_score(), gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_off)
+s15 = request.security(syminfo.tickerid, "15",  f_score(), gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_off)
+s5  = request.security(syminfo.tickerid, "5",   f_score(), gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_off)
+shl = request.security(syminfo.tickerid, highlightTf, f_score(), gaps=barmerge.gaps_off, lookahead=barmerge.lookahead_off)
+
+biasOf(score) => score >= buyThresh ? "BUY" : score <= sellThresh ? "SELL" : "NEUTRAL"
+colorOf(score) => score >= buyThresh ? color.new(color.lime, 0) : score <= sellThresh ? color.new(color.red, 0) : color.new(color.gray, 0)
+
+// ---------- Dashboard table ----------
+var table dash = table.new(tablePos, 2, 9, border_width=1, bgcolor=color.new(color.black, 0))
+
+fillRow(rowIdx, name, score) =>
+    table.cell(dash, 0, rowIdx, name, text_color=color.white)
+    table.cell(dash, 1, rowIdx, biasOf(score) + "  " + str.tostring(math.round(score)), text_color=colorOf(score))
+
+if barstate.islast
+    table.cell(dash, 0, 0, "Top Trade Calls", text_color=color.white, bgcolor=color.new(color.black, 0))
+    table.cell(dash, 1, 0, "MTF Dashboard",   text_color=color.white, bgcolor=color.new(color.black, 0))
+    fillRow(1, "1W",  s1w)
+    fillRow(2, "1D",  s1d)
+    fillRow(3, "4H",  s4h)
+    fillRow(4, "1H",  s1h)
+    fillRow(5, "30m", s30)
+    fillRow(6, "15m", s15)
+    fillRow(7, "5m",  s5)
+    fillRow(8, "Selected (" + highlightTf + ")", shl)
+
+alertcondition(ta.crossover(shl, buyThresh),   title="Top Trade Calls Buy (Selected TF)",  message="Top Trade Calls: BUY bias on {{ticker}} (selected timeframe)")
+alertcondition(ta.crossunder(shl, sellThresh), title="Top Trade Calls Sell (Selected TF)", message="Top Trade Calls: SELL bias on {{ticker}} (selected timeframe)")
