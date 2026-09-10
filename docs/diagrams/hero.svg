@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="200" viewBox="0 0 1000 200">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00C9FF"/>
+      <stop offset="100%" stop-color="#92FE9D"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="200" fill="#0d1117" rx="16"/>
+  <text x="500" y="80" text-anchor="middle" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="url(#g)">Top Trade Calls</text>
+  <text x="500" y="120" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" fill="#c9d1d9">TradingView Multi-Timeframe Confluence Suite • Pine Script v6 • Buy/Sell Alerts</text>
+  <rect x="350" y="140" width="300" height="40" rx="20" fill="#161b22" stroke="#30363d"/>
+  <text x="500" y="165" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#8b949e">Trend 40% • Momentum 30% • Volume 30% → Score -100..100</text>
+</svg>

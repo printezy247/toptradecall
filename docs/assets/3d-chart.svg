@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <style>
+      @keyframes pulse {0% {opacity:.4} 50% {opacity:1} 100% {opacity:.4}}
+      .pulse {animation:pulse 3s infinite}
+    </style>
+  </defs>
+  <rect width="600" height="300" fill="url(#bg)" rx="16"/>
+  <!-- 3D bar-like shapes -->
+  <g class="pulse">
+    <polygon points="100,240 130,240 150,180 120,180" fill="#00C9FF"/>
+    <polygon points="170,240 200,240 220,150 190,150" fill="#92FE9D"/>
+    <polygon points="240,240 270,240 290,200 260,200" fill="#FFD166"/>
+    <polygon points="310,240 340,240 360,120 330,120" fill="#EF476F"/>
+  </g>
+  <text x="300" y="270" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#8b949e">Animated 3D confluence visualization • Trend • Momentum • Volume</text>
+</svg>

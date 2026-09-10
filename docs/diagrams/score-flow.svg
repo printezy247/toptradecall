@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="260" viewBox="0 0 900 260">
+<rect width="900" height="260" fill="#0d1117" rx="16"/>
+<text x="450" y="40" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="600" fill="#e6edf3">Confluence Score Flow</text>
+<g font-family="sans-serif" font-size="14" fill="#c9d1d9">
+  <rect x="60" y="70" width="160" height="80" rx="12" fill="#161b22" stroke="#30363d"/>
+  <text x="140" y="105" text-anchor="middle">Trend</text>
+  <text x="140" y="125" text-anchor="middle">EMA 9/21 vs ATR</text>
+  <text x="140" y="145" text-anchor="middle">Weight 40%</text>
+  <rect x="270" y="70" width="160" height="80" rx="12" fill="#161b22" stroke="#30363d"/>
+  <text x="350" y="105" text-anchor="middle">Momentum</text>
+  <text x="350" y="125" text-anchor="middle">RSI vs 50</text>
+  <text x="350" y="145" text-anchor="middle">Weight 30%</text>
+  <rect x="480" y="70" width="160" height="80" rx="12" fill="#161b22" stroke="#30363d"/>
+  <text x="560" y="105" text-anchor="middle">Volume</text>
+  <text x="560" y="125" text-anchor="middle">Up vs Down Bars</text>
+  <text x="560" y="145" text-anchor="middle">Weight 30%</text>
+  <rect x="320" y="180" width="260" height="60" rx="12" fill="#1f6feb" stroke="#30363d"/>
+  <text x="450" y="215" text-anchor="middle" fill="white" font-weight="600">Score -100..100 → BUY ≥20 / SELL ≤-20 / NEUTRAL</text>
+</g>
+<polygon points="140,150 350,70" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#arrow)"/>
+<polygon points="350,150 560,70" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#arrow)"/>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+    <polygon points="0 0,10 3,0 6" fill="#30363d"/>
+  </marker>
+</defs>
+</svg>
