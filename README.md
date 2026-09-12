@@ -312,10 +312,10 @@ flowchart LR
 This repo uses **GitHub-hosted automation** to reduce one-off chores for maintainers and contributors:
 <ul style="margin:0;padding-left:1.1rem;color:#3a4a5a;">
 <li><b>Commit hygiene</b> — conventional, scoped commits reviewed before merge.</li>
-<li><b>PR lifecycle</b> — templates, checks, and merge gating.</li>
-<li><b>Auto-merge</b> — eligible, passing PRs can be merged automatically.</li>
+<li><b>Auto-merge</b> — enabled in repo settings; eligible PRs can merge themselves once green.</li>
+<li><b>Branch cleanup</b> — head branches are deleted automatically when a PR merges.</li>
 </ul>
-> For this repo, the exact automation stack you install is yours to choose (GitHub Actions, a local dev script, or the `gh` CLI). The README keeps the *recommended* flow concrete and copy-pasteable.
+> PR templates, required status checks, and auto-labeling are *not yet configured* in this repo — the table below marks which pieces are live vs. recommended next steps.
 
 </details>
 
@@ -325,12 +325,14 @@ This repo uses **GitHub-hosted automation** to reduce one-off chores for maintai
 
 ## 🔄 Supported Git Ops
 
-| Operation | When it kicks in | How it’s automated |
-|-----------|-----------------|--------------------|
-| **Commit** | Dev / pre-PR | Formatting + scope rules via commit lint; `gh` CLI for authoring |
-| **Pull Request** | Opening a branch | PR template + required status checks + auto-label |
-| **Merge** | PR approved + green | Auto-merge for eligible PRs; otherwise squash/hotfix workflow |
-| **Sync** | Main drifts | Upstream sync helper + conflict note before rebase |
+| Operation | Status | How it works today |
+|-----------|--------|--------------------|
+| **Commit** | ✅ convention | Conventional, scoped messages (`type(scope): summary`) — enforced by review, not tooling |
+| **Pull Request** | ✅ flow | Short-lived feature branch → PR → merge; template/checks recommended but not yet configured |
+| **Merge** | ✅ auto-merge enabled | PRs can be set to auto-merge once checks/approvals pass; merge commit / squash / rebase all allowed |
+| **Branch cleanup** | ✅ enabled | `delete_branch_on_merge` is on — head branches vanish on merge |
+| **Required checks** | ⬜ not configured | No branch protection / status checks on `main` yet — add before enabling stricter gating |
+| **PR template / labels** | ⬜ not configured | No `.github/` templates or labeler workflow yet — recommended next steps |
 
 <br />
 
@@ -389,8 +391,8 @@ git status
 </summary>
 
 - Open a PR from a short-lived feature branch.
-- Fill the PR template — what changed, why, and any open questions.
-- Let the repo checks run before asking for review.
+- Describe what changed, why, and any open questions (a PR template isn't configured yet — keep the description self-contained).
+- Enable auto-merge if you want the PR to land as soon as it's green.
 - Reply to review comments with follow-up commits, not force pushes that rewrite public history unless the team agrees.
 
 ```bash
