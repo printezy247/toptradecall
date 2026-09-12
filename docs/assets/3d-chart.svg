@@ -1,21 +1,83 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300">
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400" role="img" aria-label="Animated 3D confluence chart showing trend, momentum and volume building into a single score">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#0d1117"/>
       <stop offset="100%" stop-color="#161b22"/>
     </linearGradient>
-    <style>
-      @keyframes pulse {0% {opacity:.4} 50% {opacity:1} 100% {opacity:.4}}
-      .pulse {animation:pulse 3s infinite}
-    </style>
+    <linearGradient id="barTrend" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7ce7ff"/>
+      <stop offset="100%" stop-color="#00a8cc"/>
+    </linearGradient>
+    <linearGradient id="barMomentum" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c7ffdb"/>
+      <stop offset="100%" stop-color="#5fd39a"/>
+    </linearGradient>
+    <linearGradient id="barVolume" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe9a8"/>
+      <stop offset="100%" stop-color="#e6b84c"/>
+    </linearGradient>
+    <linearGradient id="barScore" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff8fa8"/>
+      <stop offset="100%" stop-color="#d63b64"/>
+    </linearGradient>
   </defs>
-  <rect width="600" height="300" fill="url(#bg)" rx="16"/>
-  <!-- 3D bar-like shapes -->
-  <g class="pulse">
-    <polygon points="100,240 130,240 150,180 120,180" fill="#00C9FF"/>
-    <polygon points="170,240 200,240 220,150 190,150" fill="#92FE9D"/>
-    <polygon points="240,240 270,240 290,200 260,200" fill="#FFD166"/>
-    <polygon points="310,240 340,240 360,120 330,120" fill="#EF476F"/>
+
+  <rect width="800" height="400" rx="16" fill="url(#bg)"/>
+
+  <!-- isometric floor grid -->
+  <g stroke="#21262d" stroke-width="1">
+    <line x1="120" y1="310" x2="640" y2="310"/>
+    <line x1="150" y1="330" x2="670" y2="330"/>
+    <line x1="180" y1="350" x2="700" y2="350"/>
+    <line x1="160" y1="310" x2="220" y2="350"/>
+    <line x1="300" y1="310" x2="360" y2="350"/>
+    <line x1="440" y1="310" x2="500" y2="350"/>
+    <line x1="580" y1="310" x2="640" y2="350"/>
   </g>
-  <text x="300" y="270" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#8b949e">Animated 3D confluence visualization • Trend • Momentum • Volume</text>
+
+  <!-- ===== Trend bar (front face / top / side) ===== -->
+  <g>
+    <animate attributeName="opacity" values="0.85;1;0.85" dur="3s" repeatCount="indefinite"/>
+    <rect x="160" y="200" width="70" height="110" fill="url(#barTrend)"/>
+    <polygon points="160,200 185,185 255,185 230,200" fill="#9ef0ff"/>
+    <polygon points="230,200 255,185 255,295 230,310" fill="#0083a3"/>
+    <text x="195" y="330" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#8b949e">Trend</text>
+    <text x="195" y="350" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#6e7681">40%</text>
+  </g>
+
+  <!-- ===== Momentum bar ===== -->
+  <g>
+    <animate attributeName="opacity" values="0.85;1;0.85" dur="3s" begin="0.6s" repeatCount="indefinite"/>
+    <rect x="300" y="170" width="70" height="140" fill="url(#barMomentum)"/>
+    <polygon points="300,170 325,155 395,155 370,170" fill="#dcffe9"/>
+    <polygon points="370,170 395,155 395,295 370,310" fill="#47b57e"/>
+    <text x="335" y="330" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#8b949e">Momentum</text>
+    <text x="335" y="350" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#6e7681">30%</text>
+  </g>
+
+  <!-- ===== Volume bar ===== -->
+  <g>
+    <animate attributeName="opacity" values="0.85;1;0.85" dur="3s" begin="1.2s" repeatCount="indefinite"/>
+    <rect x="440" y="220" width="70" height="90" fill="url(#barVolume)"/>
+    <polygon points="440,220 465,205 535,205 510,220" fill="#fff3cf"/>
+    <polygon points="510,220 535,205 535,295 510,310" fill="#c2953a"/>
+    <text x="475" y="330" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#8b949e">Volume</text>
+    <text x="475" y="350" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#6e7681">30%</text>
+  </g>
+
+  <!-- ===== Score bar ===== -->
+  <g>
+    <animate attributeName="opacity" values="0.85;1;0.85" dur="3s" begin="1.8s" repeatCount="indefinite"/>
+    <rect x="580" y="140" width="70" height="170" fill="url(#barScore)"/>
+    <polygon points="580,140 605,125 675,125 650,140" fill="#ffb3c4"/>
+    <polygon points="650,140 675,125 675,295 650,310" fill="#b02d50"/>
+    <text x="615" y="330" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#8b949e">Score</text>
+    <text x="615" y="350" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#6e7681">-100..100</text>
+  </g>
+
+  <!-- baseline -->
+  <line x1="130" y1="310" x2="690" y2="310" stroke="#30363d" stroke-width="2"/>
+
+  <!-- caption -->
+  <text x="400" y="382" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#8b949e">Trend 40% • Momentum 30% • Volume 30% → one confluence score</text>
 </svg>

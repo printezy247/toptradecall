@@ -1,27 +1,72 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="260" viewBox="0 0 900 260">
-<rect width="900" height="260" fill="#0d1117" rx="16"/>
-<text x="450" y="40" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="600" fill="#e6edf3">Confluence Score Flow</text>
-<g font-family="sans-serif" font-size="14" fill="#c9d1d9">
-  <rect x="60" y="70" width="160" height="80" rx="12" fill="#161b22" stroke="#30363d"/>
-  <text x="140" y="105" text-anchor="middle">Trend</text>
-  <text x="140" y="125" text-anchor="middle">EMA 9/21 vs ATR</text>
-  <text x="140" y="145" text-anchor="middle">Weight 40%</text>
-  <rect x="270" y="70" width="160" height="80" rx="12" fill="#161b22" stroke="#30363d"/>
-  <text x="350" y="105" text-anchor="middle">Momentum</text>
-  <text x="350" y="125" text-anchor="middle">RSI vs 50</text>
-  <text x="350" y="145" text-anchor="middle">Weight 30%</text>
-  <rect x="480" y="70" width="160" height="80" rx="12" fill="#161b22" stroke="#30363d"/>
-  <text x="560" y="105" text-anchor="middle">Volume</text>
-  <text x="560" y="125" text-anchor="middle">Up vs Down Bars</text>
-  <text x="560" y="145" text-anchor="middle">Weight 30%</text>
-  <rect x="320" y="180" width="260" height="60" rx="12" fill="#1f6feb" stroke="#30363d"/>
-  <text x="450" y="215" text-anchor="middle" fill="white" font-weight="600">Score -100..100 → BUY ≥20 / SELL ≤-20 / NEUTRAL</text>
-</g>
-<polygon points="140,150 350,70" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#arrow)"/>
-<polygon points="350,150 560,70" fill="none" stroke="#30363d" stroke-width="2" marker-end="url(#arrow)"/>
-<defs>
-  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
-    <polygon points="0 0,10 3,0 6" fill="#30363d"/>
-  </marker>
-</defs>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300" role="img" aria-label="Confluence score flow: trend, momentum and volume feed a weighted score that classifies buy, sell or neutral">
+  <defs>
+    <linearGradient id="flowBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#10161f"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="300" rx="16" fill="url(#flowBg)"/>
+
+  <text x="450" y="38" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="600" fill="#e6edf3">Confluence Score Flow</text>
+
+  <!-- connectors (drawn first so cards sit on top) -->
+  <g stroke="#58a6ff" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <path d="M 150 165 L 150 205 L 305 205"/>
+    <path d="M 350 165 L 350 205 L 405 205" opacity="0.35"/>
+    <path d="M 550 165 L 550 205 L 505 205" opacity="0.35"/>
+    <path d="M 750 165 L 750 205 L 605 205"/>
+  </g>
+
+  <!-- Trend card -->
+  <g>
+    <rect x="60" y="70" width="180" height="95" rx="12" fill="#161b22" stroke="#30363d"/>
+    <text x="150" y="100" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="600" fill="#79c0ff">Trend</text>
+    <text x="150" y="122" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#c9d1d9">EMA 9/21 vs ATR(14)</text>
+    <text x="150" y="146" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#8b949e">Weight 40%</text>
+  </g>
+
+  <!-- Momentum card -->
+  <g>
+    <rect x="260" y="70" width="180" height="95" rx="12" fill="#161b22" stroke="#30363d"/>
+    <text x="350" y="100" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="600" fill="#7ee787">Momentum</text>
+    <text x="350" y="122" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#c9d1d9">RSI(14) distance from 50</text>
+    <text x="350" y="146" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#8b949e">Weight 30%</text>
+  </g>
+
+  <!-- Volume card -->
+  <g>
+    <rect x="460" y="70" width="180" height="95" rx="12" fill="#161b22" stroke="#30363d"/>
+    <text x="550" y="100" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="600" fill="#d2a8ff">Volume</text>
+    <text x="550" y="122" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#c9d1d9">Up vs down bars (8)</text>
+    <text x="550" y="146" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#8b949e">Weight 30%</text>
+  </g>
+
+  <!-- Score card -->
+  <g>
+    <rect x="660" y="70" width="180" height="95" rx="12" fill="#1f6feb" stroke="#388bfd"/>
+    <text x="750" y="100" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="600" fill="#ffffff">Weighted Score</text>
+    <text x="750" y="122" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#d0e4ff">0.4·trend + 0.3·mom + 0.3·vol</text>
+    <text x="750" y="146" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="600" fill="#d0e4ff">-100 .. 100</text>
+  </g>
+
+  <!-- Classification chips -->
+  <g font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="600" text-anchor="middle">
+    <rect x="230" y="240" width="130" height="36" rx="18" fill="#0ea5e9"/>
+    <text x="295" y="263" fill="#07141d">BUY ≥ +20</text>
+
+    <rect x="385" y="240" width="130" height="36" rx="18" fill="#a8a29e"/>
+    <text x="450" y="263" fill="#17130f">NEUTRAL</text>
+
+    <rect x="540" y="240" width="130" height="36" rx="18" fill="#f43f5e"/>
+    <text x="605" y="263" fill="#1d070c">SELL ≤ -20</text>
+  </g>
+
+  <!-- score to chips connector -->
+  <g stroke="#58a6ff" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <path d="M 750 165 L 750 200 L 640 200 L 640 218 L 450 218 L 450 232" opacity="0.7"/>
+  </g>
 </svg>

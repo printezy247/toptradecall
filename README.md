@@ -7,31 +7,23 @@ GitHub README HTML sanitization strips scripts/forms/`on*` handlers,
 so this file stays safe and remains fully renderable by GitHub.
 Interactive "behavior" below is purely markdown-native:
   • collapsible sections via <details>/<summary>
-  • in-SVG hover highlights (CSS inside SVG) for compatible renderers
-  • animated SVG paths built with SMIL <animate> for visual motion
+  • animated SVG built with SMIL <animate> (GitHub-safe, no CSS/JS)
   • expandable subsections, tables, and Mermaid diagrams
 ──────────────────────────────────────────────────────────────── -->
 
 <!-- ═══════════════════  HERO  ═══════════════════ -->
 <div align="center">
 
-<details style="display:inline-block;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.06);">
+<details open style="display:inline-block;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.06);">
 <summary style="cursor:default;display:flex;align-items:center;justify-content:center;">
-<!-- Collapse toggle introduces visual "depth" into the hero frame -->
 <div style="padding:2px 14px;font-size:12px;letter-spacing:.2px;color:#3a4a5a;font-weight:600;">
 🖼️ 3D confluence visualization
-</style>
 </div>
+</summary>
 
 <img src="docs/assets/3d-chart.svg"
      width="100%"
-     alt="3D animated confluence visualization" />
-
-<summary style="display:flex;align-items:center;justify-content:center;">
-<div style="padding:2px 14px;font-size:12px;letter-spacing:.2px;color:#3a4a5a;font-weight:600;">
-🖼️ 3D confluence visualization
-</style>
-</summary>
+     alt="3D animated confluence visualization showing trend, momentum and volume building into a single score" />
 
 </details>
 
