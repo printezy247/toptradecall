@@ -1,13 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="200" viewBox="0 0 1000 200">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="220" viewBox="0 0 1000 220" role="img" aria-label="Top Trade Calls — TradingView Multi-Timeframe Confluence Suite banner">
   <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="0%">
+    <linearGradient id="heroText" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#00C9FF"/>
       <stop offset="100%" stop-color="#92FE9D"/>
     </linearGradient>
+    <linearGradient id="heroRule" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00C9FF" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#00C9FF"/>
+      <stop offset="100%" stop-color="#92FE9D" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="heroBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#10161f"/>
+    </linearGradient>
   </defs>
-  <rect width="1000" height="200" fill="#0d1117" rx="16"/>
-  <text x="500" y="80" text-anchor="middle" font-family="Inter, sans-serif" font-size="36" font-weight="700" fill="url(#g)">Top Trade Calls</text>
-  <text x="500" y="120" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" fill="#c9d1d9">TradingView Multi-Timeframe Confluence Suite • Pine Script v6 • Buy/Sell Alerts</text>
-  <rect x="350" y="140" width="300" height="40" rx="20" fill="#161b22" stroke="#30363d"/>
-  <text x="500" y="165" text-anchor="middle" font-family="Inter, sans-serif" font-size="14" fill="#8b949e">Trend 40% • Momentum 30% • Volume 30% → Score -100..100</text>
+
+  <rect width="1000" height="220" rx="16" fill="url(#heroBg)"/>
+
+  <!-- soft glow accents -->
+  <circle cx="120" cy="50" r="70" fill="#00C9FF" opacity="0.06"/>
+  <circle cx="880" cy="170" r="80" fill="#92FE9D" opacity="0.05"/>
+
+  <!-- title -->
+  <text x="500" y="88" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700" fill="url(#heroText)">Top Trade Calls</text>
+
+  <!-- subtitle -->
+  <text x="500" y="124" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#c9d1d9">TradingView Multi-Timeframe Confluence Suite • Pine Script v6 • Buy/Sell Alerts</text>
+
+  <!-- gradient rule -->
+  <rect x="150" y="148" width="700" height="2" fill="url(#heroRule)"/>
+
+  <!-- weight chip -->
+  <rect x="310" y="164" width="380" height="36" rx="18" fill="#161b22" stroke="#30363d"/>
+  <text x="500" y="187" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#8b949e">Trend 40% • Momentum 30% • Volume 30% → Score -100..100</text>
 </svg>
